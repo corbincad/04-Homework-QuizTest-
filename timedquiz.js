@@ -1,7 +1,7 @@
-var startButton = document.getElementById("startButton");
-var timeCount = document.getElementById("timeCount");
-var questions = document.getElementById("questions");
-
+// var startButton = document.getElementById("startButton");
+// var timeCount = document.getElementById("timeCount");
+// var questions = document.getElementById("questions");
+var card = $("#questionsArea")
 var myQuestions = [
 
     {
@@ -20,32 +20,57 @@ var myQuestions = [
         answer: "'Inspect' tool",
     }]
 
-        var count = 45
+        var timer;
 
-        function timer() {
-            setInterval(function () {
-                timeCount.innerHTML = count;
-                count--;
-            }, 1000);
-        }
-        $(document).ready(function () {
-            $("#startPage").click(function () {
-                $(this).hide()
-            })
-        })
-        $("#startButton").on("click", timer);
+        var game = {correct:0, incorrect:0, count:45, 
+            countdown: function() {
+                game.counter--;
+                $("#counter-number").html(game.counter);
+                if (game.counter === 0) {
+                  console.log("TIME UP");
+                  game.done();
+                }
+              }, 
 
-            
-        function firstQuestion(){
-            for (var i = 0; i < myQuestions.length; i++){
-                var q1 = myQuestions[i]
-                for (var j = 0; j <myQuestions.choices.length; j++)
-                var answer1 = answer;
-                buttons.append(`
-                class="letter-button letter letter-button-color"
-                data-letter="${q1}>
-                ${q1}
-                </button>
-                `)
-            }
-        }
+              start: function(){
+                  timer = setInterval(game.countdown, 1000)
+                $("#wrapper").prepend('<h2>Timer:<span id="timeCount">45</span></h2>')
+                $("startPage").remove();
+                for (var i = 0; i < myQuestions.length; i++){
+                    card.append ("<h2>" + myQuestions[i].title + "</h2>")
+                    for (var j = 0; j <myQuestions[i].choices.length; j++){
+                        card.append("<input type='radio' name='question-" + i +
+                        "' value='" + myQuestions[i].choices + "''>" + myQuestions[i].choices[j]);
+                    }}
+                    card.append("<button id='done'>done</button>")
+                },
+
+                done: function() {
+                    var inputs = card.children("input:checked");
+                    for (var i = 0; i < inputs.length; i++) {
+                      if ($(inputs[i]).val() === questions[i].correctAnswer) {
+                        game.correct++;
+                      } else {
+                        game.incorrect++;
+                      }
+                    }
+                    this.result();
+                  },
+                  result: function() {
+                    clearInterval(timer);
+                    $("#sub-wrapper h2").remove();
+                    card.html("<h2>All Done!</h2>");
+                    card.append("<h3>Correct Answers: " + this.correct + "</h3>");
+                    card.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
+                  }
+                };
+                // CLICK EVENTS
+                $(document).on("click", "#start", function() {
+                  game.start();
+                });
+                $(document).on("click", "#done", function() {
+                  game.done();
+                });
+
+
+        
