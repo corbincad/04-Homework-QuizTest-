@@ -1,6 +1,58 @@
 * {
     
     font-family: "Josefin Sans", sans-serif;
+
+}
+#wrapper {
+
+    border: 5px solid black;
+}
+
+#sub-wrapper {
+
+    border: 5px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* * {
+    
+    font-family: "Josefin Sans", sans-serif;
 }
 
 #startPage {
@@ -55,6 +107,6 @@
 
     padding: 20px;
 }
-
+ */
 
 

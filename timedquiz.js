@@ -1,7 +1,7 @@
 // var startButton = document.getElementById("startButton");
 // var timeCount = document.getElementById("timeCount");
 // var questions = document.getElementById("questions");
-var card = $("#questionsArea")
+var card = $("#quiz-area")
 var myQuestions = [
 
     {
@@ -22,20 +22,19 @@ var myQuestions = [
 
         var timer;
 
-        var game = {correct:0, incorrect:0, count:45, 
+        var game = {correct:0, incorrect:0, count:5, 
             countdown: function() {
                 game.counter--;
                 $("#counter-number").html(game.counter);
                 if (game.counter === 0) {
-                  console.log("TIME UP");
                   game.done();
                 }
               }, 
 
               start: function(){
-                  timer = setInterval(game.countdown, 1000)
-                $("#wrapper").prepend('<h2>Timer:<span id="timeCount">45</span></h2>')
-                $("startPage").remove();
+                  timer = setInterval(game.countdown, 1000);
+                $("#sub-wrapper").prepend('<h2>Timer:<span id="counter-number">5</span></h2>');
+                $("#start").remove();
                 for (var i = 0; i < myQuestions.length; i++){
                     card.append ("<h2>" + myQuestions[i].title + "</h2>")
                     for (var j = 0; j <myQuestions[i].choices.length; j++){
@@ -48,7 +47,7 @@ var myQuestions = [
                 done: function() {
                     var inputs = card.children("input:checked");
                     for (var i = 0; i < inputs.length; i++) {
-                      if ($(inputs[i]).val() === questions[i].correctAnswer) {
+                      if ($(inputs[i]).val() === myQuestions[i].answer) {
                         game.correct++;
                       } else {
                         game.incorrect++;
